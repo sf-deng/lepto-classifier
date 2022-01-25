@@ -1,0 +1,10 @@
+---
+name: lepto-clf
+
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - pandas
+  - scikit-learn = 0.24.2

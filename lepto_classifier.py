@@ -50,18 +50,15 @@ class LeptoClassifier():
             # MAT >= 3200
             results[rows_with_high_mat] = 1
         else:
-            processed_data = self.raw_data[self.sd.columns.drop('MAT')].div(self.sd.drop(columns=['MAT']).iloc[0])
+            processed_data = self.raw_data[valid_rows][self.sd.columns.drop('MAT')].div(self.sd.drop(columns=['MAT']).iloc[0])
             preds = self.svm_exclude_mat.predict(np.array(processed_data)) if len(processed_data)>0 else []
-            results[valid_rows] = preds
+            results = preds
         
         return results
         
     def _sanity_check(self, use_mat):
-        required_cols = set(self.sd.columns if use_mat else self.sd.columns.drop('MAT'))
+        required_cols = set(self.sd.columns.drop('Prior') if use_mat else self.sd.columns.drop(['MAT', 'Prior']))
         data_cols = set(self.raw_data.columns)
         missing_cols = required_cols-data_cols
         if missing_cols:
             raise ValueError(f'Data missing required column(s): {missing_cols}')
-        
-        
-            
