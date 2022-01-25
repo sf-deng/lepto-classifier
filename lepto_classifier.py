@@ -17,7 +17,7 @@ class LeptoClassifier():
         self._sanity_check(use_mat)
         
         results = pd.Series([-1]*len(self.raw_data), index=self.raw_data.index)
-        valid_rows = self.raw_data.notna().all(axis=1)
+        valid_rows = self.raw_data[list(self.required_cols)].notna().all(axis=1)
         self.raw_data.loc[valid_rows,'Prior'] = [self.prior[breed][0] for breed in self.raw_data[valid_rows]['Breed Group']]
         
         if use_mat:
@@ -40,10 +40,8 @@ class LeptoClassifier():
                 1600: 8,
                 }
             log_mat = [mat_to_log_mat[processed_data['MAT'].iloc[i]] for i in range(len(processed_data))]
-            self.log_mat = log_mat
             processed_data['MAT'] = log_mat
             processed_data = processed_data.div(self.sd.iloc[1])
-            self.processed_data = processed_data
             preds = self.svm_include_mat.predict(np.array(processed_data)) if len(processed_data)>0 else []
             results[rows_with_low_mat] = preds
             
@@ -56,9 +54,10 @@ class LeptoClassifier():
         
         return results
         
-    def _sanity_check(self, use_mat):
-        required_cols = set(self.sd.columns.drop('Prior') if use_mat else self.sd.columns.drop(['MAT', 'Prior']))
+    def _sanity_check(self, use_mat,):
+        self.required_cols = set(self.sd.columns.drop('Prior') if use_mat else self.sd.columns.drop(['MAT', 'Prior']))
+        self.required_cols.add('Breed Group')
         data_cols = set(self.raw_data.columns)
-        missing_cols = required_cols-data_cols
+        missing_cols = self.required_cols-data_cols
         if missing_cols:
             raise ValueError(f'Data missing required column(s): {missing_cols}')
