@@ -16,8 +16,8 @@ The predict method will output a pandas series having the same length as the num
 ## How to prepare the data
 The data csv file must contain the following columns (case-sensitive)
 - Weight (kg)
-- Sex: (male=1, female=0)
-- Breed Group: (must be Toy, Herding, Hound, Mix, Non-Sporting, Sporting, Terrier, Working, Foundation Stock Service, or Other)
+- Sex (binary encoded, male=1, female=0)
+- Breed Group (must be "Toy", "Herding", "Hound", "Mix", "Non-Sporting", "Sporting", "Terrier", "Working", "Foundation Stock Service", or "Other"; case-sensitive)
 - Anion Gap (mmol/L)
 - Sodium (mmol/L)
 - Potassium (mmol/L)
@@ -38,7 +38,7 @@ The data csv file must contain the following columns (case-sensitive)
 - Cholesterol (mg/dL)
 - Bilirubin (mg/dL)
 - Urine Specific Gravity (as a number)
-- Urine (Urine protein as a number 0,1,2,3,4)
+- Urine Protein (as a number 0,1,2,3,4)
 - Urine Glucose (0-4)
 - Hct (%)
 - Hgb (g/dL)
@@ -51,5 +51,5 @@ The data csv file must contain the following columns (case-sensitive)
 - Eosin (/mcL)
 - Plt (/mcL)
 
-If use_mat is set to True (default False) in the LeptoClassifier.predict method. Then the column "MAT" must also be provided in the csv file.
+If use_mat is set to True (default False) for the LeptoClassifier.predict method. Then the column "MAT" must also be provided in the csv file.
 - MAT: (Use the recipricol titer: 0, 100, 200, 400, ...)
