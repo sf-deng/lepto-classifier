@@ -14,7 +14,7 @@ predictions_without_mat = clf.predict(data_path, use_mat=False)
 The predict method will output a pandas series having the same length as the number of rows in the data csv file. A prediction value 1 means lepto positive, 0 means lepto negative, and -1 means no prediction is made due to missing values.
 
 ## How to prepare the data
-The data csv file must contain the following columns (case-sensitive)
+The data csv file must contain the following columns (case-sensitive). See sampleCSV for example of column headers. The second row has notes on units.
 - Weight (kg)
 - Sex (binary encoded, male=1, female=0)
 - Breed Group (must be "Toy", "Herding", "Hound", "Mix", "Non-Sporting", "Sporting", "Terrier", "Working", "Foundation Stock Service", or "Other"; case-sensitive)
