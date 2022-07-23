@@ -15,7 +15,7 @@ class LeptoClassifier():
     def predict(self, data_path, use_mat=False,):
         # This function loads prediction data from a path
         data = pd.read_csv(data_path)
-        return self.predict_df(data, use_mat)
+        return self.predict_raw(data, use_mat)
 
     def predict_raw(self, data, use_mat=False,):
         # This function loads raw data from a numpy DataFrame object
