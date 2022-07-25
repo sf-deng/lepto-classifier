@@ -11,9 +11,15 @@ class LeptoClassifier():
             self.svm_include_mat = pickle.load(f)
         self.sd = pd.read_csv('data/sd.csv')
         self.prior = pd.read_csv('data/prior.csv')
-            
+
     def predict(self, data_path, use_mat=False,):
-        self.raw_data = pd.read_csv(data_path)
+        # This function loads prediction data from a path
+        data = pd.read_csv(data_path)
+        return self.predict_raw(data, use_mat)
+
+    def predict_raw(self, data, use_mat=False,):
+        # This function loads raw data from a numpy DataFrame object
+        self.raw_data = data
         self._sanity_check(use_mat)
         
         results = pd.Series([-1]*len(self.raw_data), index=self.raw_data.index)
